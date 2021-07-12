@@ -1,0 +1,96 @@
+categories:
+- cassandra
+- database
+- nosql
+questions:
+- variable: defaultPrivatehouse
+  default: "true"
+  descrition: "是否启用私有镜像仓库"
+  label: 启用私有镜像仓库
+  type: boolean
+  show_subquestion_if: true
+  group: "私有镜像仓库设置"
+  subquestions:
+  - variable: privatehouse.address
+    default: "192.168.1.120"
+    label: "私有镜像仓库地址"
+    type: string
+    required: true
+  - variable: privatehouse.port
+    default: 8083
+    label: "私有镜像仓库镜像下载端口"
+    type: int
+    required: true
+- variable: defaultImage
+  default: true
+  descrition: "是否使用默认镜像"
+  label: "使用默认镜像"
+  type: boolean
+  show_subquestion_if: false
+  group: "镜像选择"
+  subquestions:
+  - variable: image.name
+    default: "cassandra_ronds"
+    label: "镜像名称"
+    type: string
+    required: true
+  - variable: image.tag
+    default: "3.11.10"
+    label: "镜像版本"
+    type: string
+    required: true
+  - variable: image.pullPolicy
+    default: "IfNotPresent"
+    label: "镜像拉取策略"
+    type: enum
+    required: true
+    options:
+      - "Always"
+      - "IfNotPresent"
+      - "Never"
+- variable: cluster.replicaCount
+  default: 3
+  descrition: "副本数"
+  label: "副本数"
+  type: int
+  group: "集群设置"
+  required: true
+  min: 1
+  max: 5
+- variable: cluster.seedCount
+  default: 3
+  descrition: "种子节点数量"
+  label: "种子节点数量"
+  type: int
+  group: "集群设置"
+  required: true
+  min: 1
+  max: 5
+- variable: cluster.name
+  default: "Cassandra_Cluster"
+  descrition: "填写集群名称"
+  label: "集群名称"
+  type: string
+  group: "集群设置"
+  required: true
+- variable: resource.memory
+  default: 4
+  descrition: "填写最大内存大小,单位:GiB"
+  label: "内存设置"
+  type: int
+  group: "资源设置"
+  required: true
+- variable: resource.storageSize
+  default: 10
+  descrition: "填写最大存储大小,单位:GiB"
+  label: "存储设置"
+  type: int
+  group: "资源设置"
+  required: true
+- variable: resource.storageClass
+  default: "longhorn"
+  descrition: "选择可用的存储类"
+  label: "存储类设置"
+  type: storageclass
+  group: "资源设置"
+  required: true
