@@ -22,5 +22,5 @@ healthcheck:
   delay: 10
   timeout: 5
 service:
-  enable: true
+  type: "NodePort"
   cqlPort: 30042

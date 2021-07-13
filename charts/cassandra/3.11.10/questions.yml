@@ -5,7 +5,7 @@ categories:
 questions:
 - variable: defaultPrivatehouse
   default: "true"
-  descrition: "enable private warehouse"
+  description: "enable private warehouse"
   label: private warehouse
   type: boolean
   show_subquestion_if: true
@@ -23,7 +23,7 @@ questions:
     required: true
 - variable: defaultImage
   default: true
-  descrition: "enable default image"
+  description: "enable default image"
   label: "default image"
   type: boolean
   show_subquestion_if: false
@@ -50,7 +50,7 @@ questions:
       - "Never"
 - variable: cluster.replicaCount
   default: 3
-  descrition: "set replica numbers"
+  description: "set replica numbers"
   label: "replica num"
   type: int
   group: "Cluster Settings"
@@ -59,7 +59,7 @@ questions:
   max: 5
 - variable: cluster.seedCount
   default: 3
-  descrition: "set seed numbers"
+  description: "set seed numbers"
   label: "seed num"
   type: int
   group: "Cluster Settings"
@@ -68,41 +68,44 @@ questions:
   max: 5
 - variable: cluster.name
   default: "Cassandra_Cluster"
-  descrition: "set cluster name"
+  description: "set cluster name"
   label: "custer name"
   type: string
   group: "Cluster Settings"
   required: true
-- variable: service.enable
-  default: "true"
-  descrition: "enable nodeport"
-  label: "nodeport"
-  type: boolean
+- variable: service.type
+  default: "ClusterIP"
+  description: "select service type"
+  label: "service type"
+  type: enum
+  options:
+  - "ClusterIP"
+  - "NodePort"
   group: "Cluster Settings"
 - variable: service.cqlPort
   default: 30042
-  descrition: "set node port"
+  description: "set node port"
   label: "node port"
   type: int
   group: "Cluster Settings"
-  show_if: "service.enable=true"
+  show_if: "service.type=NodePort"
 - variable: resource.memory
   default: 4
-  descrition: "set max memory size, which unit is GiB"
+  description: "set max memory size, which unit is GiB"
   label: "memory size"
   type: int
   group: "Resource Settings"
   required: true
 - variable: resource.storageSize
   default: 10
-  descrition: "set max storage size, which unit is GiB"
+  description: "set max storage size, which unit is GiB"
   label: "storage size"
   type: int
   group: "Resource Settings"
   required: true
 - variable: resource.storageClass
   default: "longhorn"
-  descrition: "select storageclass"
+  description: "select storageclass"
   label: "storageclass"
   type: storageclass
   group: "Resource Settings"

@@ -1,3 +1,4 @@
+{{- if eq .Values.service.type "ClusterIP" -}}
 apiVersion: v1
 kind: Service
 metadata:
@@ -9,11 +10,10 @@ spec:
   clusterIP: None
   ports:
   - port: 9042
-    targetPort: 9042
     name: cql
   - port: 7199
-    targetPort: 7199
     name: jmx
   selector:
     app: cassandra
     instance: {{ .Release.Name }}
+{{- end -}}
