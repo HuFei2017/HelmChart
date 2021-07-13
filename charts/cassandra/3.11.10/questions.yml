@@ -5,43 +5,43 @@ categories:
 questions:
 - variable: defaultPrivatehouse
   default: "true"
-  descrition: "是否启用私有镜像仓库"
-  label: 启用私有镜像仓库
+  descrition: "enable private warehouse"
+  label: private warehouse
   type: boolean
   show_subquestion_if: true
-  group: "私有镜像仓库设置"
+  group: "Private Warehouse Settings"
   subquestions:
   - variable: privatehouse.address
     default: "192.168.1.120"
-    label: "私有镜像仓库地址"
+    label: "warehouse ip address"
     type: string
     required: true
   - variable: privatehouse.port
     default: 8083
-    label: "私有镜像仓库镜像下载端口"
+    label: "warehouse download port"
     type: int
     required: true
 - variable: defaultImage
   default: true
-  descrition: "是否使用默认镜像"
-  label: "使用默认镜像"
+  descrition: "enable default image"
+  label: "default image"
   type: boolean
   show_subquestion_if: false
-  group: "镜像选择"
+  group: "Image Settings"
   subquestions:
   - variable: image.name
     default: "cassandra_ronds"
-    label: "镜像名称"
+    label: "image name"
     type: string
     required: true
   - variable: image.tag
     default: "3.11.10"
-    label: "镜像版本"
+    label: "image version"
     type: string
     required: true
   - variable: image.pullPolicy
     default: "IfNotPresent"
-    label: "镜像拉取策略"
+    label: "image pull policy"
     type: enum
     required: true
     options:
@@ -50,53 +50,60 @@ questions:
       - "Never"
 - variable: cluster.replicaCount
   default: 3
-  descrition: "副本数"
-  label: "副本数"
+  descrition: "set replica numbers"
+  label: "replica num"
   type: int
-  group: "集群设置"
+  group: "Cluster Settings"
   required: true
   min: 1
   max: 5
 - variable: cluster.seedCount
   default: 3
-  descrition: "种子节点数量"
-  label: "种子节点数量"
+  descrition: "set seed numbers"
+  label: "seed num"
   type: int
-  group: "集群设置"
+  group: "Cluster Settings"
   required: true
   min: 1
   max: 5
 - variable: cluster.name
   default: "Cassandra_Cluster"
-  descrition: "填写集群名称"
-  label: "集群名称"
+  descrition: "set cluster name"
+  label: "custer name"
   type: string
-  group: "集群设置"
+  group: "Cluster Settings"
   required: true
 - variable: service.enable
   default: "true"
-  descrition: "是否开启NodePort"
-  label: "开启NodePort"
+  descrition: "enable nodeport"
+  label: "nodeport"
   type: boolean
-  group: "集群设置"
+  group: "Cluster Settings"
+- variable: service.cqlPort
+  default: 30042
+  descrition: "set node port"
+  label: "node port"
+  type: int
+  group: "Cluster Settings"
+  show_if: "service.enable=true"
 - variable: resource.memory
   default: 4
-  descrition: "填写最大内存大小,单位:GiB"
-  label: "内存设置"
+  descrition: "set max memory size, which unit is GiB"
+  label: "memory size"
   type: int
-  group: "资源设置"
+  group: "Resource Settings"
   required: true
 - variable: resource.storageSize
   default: 10
-  descrition: "填写最大存储大小,单位:GiB"
-  label: "存储设置"
+  descrition: "set max storage size, which unit is GiB"
+  label: "storage size"
   type: int
-  group: "资源设置"
+  group: "Resource Settings"
   required: true
 - variable: resource.storageClass
   default: "longhorn"
-  descrition: "选择可用的存储类"
-  label: "存储类设置"
+  descrition: "select storageclass"
+  label: "storageclass"
   type: storageclass
-  group: "资源设置"
+  group: "Resource Settings"
   required: true

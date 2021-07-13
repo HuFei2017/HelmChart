@@ -10,13 +10,9 @@ spec:
   type: NodePort
   ports:
   - port: 9042
-    targetPort: 9042
-    nodePort: 30042
+    targetPort: cql
+    nodePort: {{ .Values.service.cqlPort }}
     name: cql
-  - port: 7199
-    targetPort: 7199
-    nodePort: 30199
-    name: jmx
   selector:
     app: cassandra
     instance: {{ .Release.Name }}
