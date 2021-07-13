@@ -10,7 +10,7 @@ spec:
   type: NodePort
   ports:
   - port: 9042
-    targetPort: cql
+    targetPort: 9042
     nodePort: {{ .Values.service.cqlPort }}
     name: cql
   selector:

@@ -11,10 +11,12 @@ spec:
   selector:
     matchLabels:
       app: cassandra
+      instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
         app: cassandra
+        instance: {{ .Release.Name }}
     spec:
       {{- if .Values.node.selectorEnable }}
       nodeSelector:
