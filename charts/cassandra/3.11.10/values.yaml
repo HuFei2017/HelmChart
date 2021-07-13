@@ -21,3 +21,5 @@ healthcheck:
   default: false
   delay: 10
   timeout: 5
+service:
+  enable: true

@@ -1,0 +1,21 @@
+{{- if .Values.service.enable -}}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: cassandra
+  name: {{ template "fullname" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  type: NodePort
+  ports:
+  - port: 9042
+    targetPort: 9042
+    nodePort: 30042
+  - port: 7199
+    targetPort: 7199
+    nodePort: 30199
+  selector:
+    app: cassandra
+    instance: {{ .Release.Name }}
+{{- end -}}

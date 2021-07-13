@@ -73,6 +73,12 @@ questions:
   type: string
   group: "集群设置"
   required: true
+- variable: service.enable
+  default: "true"
+  descrition: "是否开启NodePort"
+  label: "开启NodePort"
+  type: boolean
+  group: "集群设置"
 - variable: resource.memory
   default: 4
   descrition: "填写最大内存大小,单位:GiB"
