@@ -3,7 +3,7 @@ privatehouse:
   port: 8083
 image:
   name: cassandra_ronds
-  tag: 4.0
+  tag: "4.0"
   pullPolicy: IfNotPresent
 cluster:
   replicaCount: 3
