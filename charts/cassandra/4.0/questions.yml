@@ -48,6 +48,12 @@ questions:
       - "Always"
       - "IfNotPresent"
       - "Never"
+- variable: node.antiAffinity
+  default: true
+  description: "enable every pod run on different node"
+  label: "node antiAffinity"
+  type: boolean
+  group: "Cluster Settings"
 - variable: cluster.replicaCount
   default: 3
   description: "set replica numbers"

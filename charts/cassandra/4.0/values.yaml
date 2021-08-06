@@ -11,6 +11,7 @@ cluster:
   name: Cassandra_Cluster
 node:
   selectorEnable: true
+  antiAffinity: true
   selectorLabel:
   - cassandra: true
 resource:
