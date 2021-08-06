@@ -1,0 +1,19 @@
+annotations:
+  category: Database
+apiVersion: v1
+name: cassandra
+version: 4.0
+appVersion: 1.2.0
+description: The Custom Cassandra, with tuning some java params.
+keywords:
+  - cassandra
+  - database
+  - nosql
+engine: gotpl
+home: https://cassandra.apache.org/
+icon: https://bitnami.com/assets/stacks/cassandra/img/cassandra-stack-220x234.png
+maintainers:
+- email: fei.hu@ronds.com.cn
+  name: hufei
+sources:
+  - http://cassandra.apache.org

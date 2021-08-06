@@ -1,0 +1,112 @@
+categories:
+- cassandra
+- database
+- nosql
+questions:
+- variable: defaultPrivatehouse
+  default: "true"
+  description: "enable private warehouse"
+  label: private warehouse
+  type: boolean
+  show_subquestion_if: true
+  group: "Private Warehouse Settings"
+  subquestions:
+  - variable: privatehouse.address
+    default: "192.168.1.120"
+    label: "warehouse ip address"
+    type: string
+    required: true
+  - variable: privatehouse.port
+    default: 8083
+    label: "warehouse download port"
+    type: int
+    required: true
+- variable: defaultImage
+  default: true
+  description: "enable default image"
+  label: "default image"
+  type: boolean
+  show_subquestion_if: false
+  group: "Image Settings"
+  subquestions:
+  - variable: image.name
+    default: "cassandra_ronds"
+    label: "image name"
+    type: string
+    required: true
+  - variable: image.tag
+    default: "4.0"
+    label: "image version"
+    type: string
+    required: true
+  - variable: image.pullPolicy
+    default: "IfNotPresent"
+    label: "image pull policy"
+    type: enum
+    required: true
+    options:
+      - "Always"
+      - "IfNotPresent"
+      - "Never"
+- variable: cluster.replicaCount
+  default: 3
+  description: "set replica numbers"
+  label: "replica num"
+  type: int
+  group: "Cluster Settings"
+  required: true
+  min: 1
+  max: 5
+- variable: cluster.seedCount
+  default: 3
+  description: "set seed numbers"
+  label: "seed num"
+  type: int
+  group: "Cluster Settings"
+  required: true
+  min: 1
+  max: 5
+- variable: cluster.name
+  default: "Cassandra_Cluster"
+  description: "set cluster name"
+  label: "custer name"
+  type: string
+  group: "Cluster Settings"
+  required: true
+- variable: service.type
+  default: "ClusterIP"
+  description: "select service type"
+  label: "service type"
+  type: enum
+  options:
+  - "ClusterIP"
+  - "NodePort"
+  group: "Cluster Settings"
+- variable: service.cqlPort
+  default: 30042
+  description: "set node port"
+  label: "node port"
+  type: int
+  group: "Cluster Settings"
+  show_if: "service.type=NodePort"
+- variable: resource.memory
+  default: 4
+  description: "set max memory size, which unit is GiB"
+  label: "memory size"
+  type: int
+  group: "Resource Settings"
+  required: true
+- variable: resource.storageSize
+  default: 10
+  description: "set max storage size, which unit is GiB"
+  label: "storage size"
+  type: int
+  group: "Resource Settings"
+  required: true
+- variable: resource.storageClass
+  default: "longhorn"
+  description: "select storageclass"
+  label: "storageclass"
+  type: storageclass
+  group: "Resource Settings"
+  required: true

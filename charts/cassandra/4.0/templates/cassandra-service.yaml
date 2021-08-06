@@ -1,0 +1,19 @@
+{{- if eq .Values.service.type "NodePort" -}}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: cassandra
+  name: {{ template "fullname" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  type: NodePort
+  ports:
+  - port: 9042
+    targetPort: cql
+    nodePort: {{ .Values.service.cqlPort }}
+    name: cql
+  selector:
+    app: cassandra
+    instance: {{ .Release.Name }}
+{{- end -}}

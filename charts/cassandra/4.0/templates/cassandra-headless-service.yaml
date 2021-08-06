@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: cassandra
+  name: {{ template "fullname" . }}-headless
+  namespace: {{ .Release.Namespace }}
+spec:
+  clusterIP: None
+  ports:
+  - port: 9042
+    name: cql
+    targetPort: cql
+  - port: 7199
+    name: jmx
+    targetPort: jmx
+  selector:
+    app: cassandra
+    instance: {{ .Release.Name }}

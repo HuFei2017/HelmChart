@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: cassandra
+spec:
+  replicas: {{ .Values.cluster.replicaCount }}
+  serviceName: {{ include "fullname" . }}-headless
+  selector:
+    matchLabels:
+      app: cassandra
+      instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: cassandra
+        instance: {{ .Release.Name }}
+    spec:
+      {{- if .Values.node.selectorEnable }}
+      nodeSelector:
+        {{- range .Values.node.selectorLabel }}
+        {{- range $key, $val := . }}
+        {{ $key }}: {{ $val | quote }}
+        {{- end }}
+        {{- end }}
+      {{- end }}
+      terminationGracePeriodSeconds: 1800
+      containers:
+      - name: cassandra
+        # image: cassandra:3.11.10
+        image: {{ .Values.privatehouse.address }}:{{ .Values.privatehouse.port }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources:
+          requests:
+            memory: {{ printf "%dGi" (.Values.resource.memory | int) | quote }}
+          limits:
+            memory: {{ printf "%dGi" (.Values.resource.memory | int) | quote }}
+        ports:
+        - containerPort: 7000
+          name: intra
+        - containerPort: 7001
+          name: tls
+        - containerPort: 7199
+          name: jmx
+        - containerPort: 9042
+          name: cql
+        securityContext:
+          capabilities:
+            add:
+              - IPC_LOCK
+        lifecycle:
+          preStop:
+            exec:
+              command: 
+              - /bin/sh
+              - -c
+              - nodetool drain
+        env:
+          - name: CASSANDRA_MAX_HEAP_SIZE
+            value: {{ printf "%dG" (div .Values.resource.memory 2) }}
+          - name: CASSANDRA_HEAP_NEWSIZE
+            value: 100M
+          - name: CASSANDRA_SEEDS
+            value: {{ (include "seeds" .) | quote }}
+          - name: CASSANDRA_CLUSTER_NAME
+            value: {{ .Values.cluster.name | quote }}
+          - name: TZ
+            value: Asia/Shanghai
+        readinessProbe:
+          exec:
+            command:
+            - /bin/bash
+            - -c
+            - nodetool status
+          {{- if .Values.healthcheck.default }}
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
+          {{- else }}
+          initialDelaySeconds: {{ .Values.healthcheck.delay | int }}
+          timeoutSeconds: {{ .Values.healthcheck.timeout | int }}
+          {{- end }}
+        volumeMounts:
+        - name: cassandra-data
+          mountPath: /var/lib/cassandra
+  volumeClaimTemplates:
+  - metadata:
+      name: cassandra-data
+    spec:
+      storageClassName: {{ default "longhorn" .Values.resource.storageClass }}
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: {{ printf "%dGi" (.Values.resource.storageSize | int) }}

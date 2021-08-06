@@ -1,0 +1,26 @@
+privatehouse:
+  address: 192.168.1.120
+  port: 8083
+image:
+  name: cassandra_ronds
+  tag: 4.0
+  pullPolicy: IfNotPresent
+cluster:
+  replicaCount: 3
+  seedCount: 3
+  name: Cassandra_Cluster
+node:
+  selectorEnable: true
+  selectorLabel:
+  - cassandra: true
+resource:
+  memory: 4
+  storageSize: 10
+  storageClass: longhorn
+healthcheck:
+  default: false
+  delay: 10
+  timeout: 5
+service:
+  type: "NodePort"
+  cqlPort: 30042
