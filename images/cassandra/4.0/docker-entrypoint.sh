@@ -77,13 +77,13 @@ if [ "$1" = 'cassandra' ]; then
     # change jvm configuration
 	# update jvm memory size
 	# change default jvm type, from CMS to G1
-	_sed-in-place "$CASSANDRA_CONF/jvm.options" \
+	_sed-in-place "$CASSANDRA_CONF/jvm-server.options" \
 		-r 's/^(#)?(-Xms).*/\2'"$CASSANDRA_MAX_HEAP_SIZE"'/'
-	_sed-in-place "$CASSANDRA_CONF/jvm.options" \
+	_sed-in-place "$CASSANDRA_CONF/jvm-server.options" \
 		-r 's/^(#)?(-Xmx).*/\2'"$CASSANDRA_MAX_HEAP_SIZE"'/'
-	_sed-in-place "$CASSANDRA_CONF/jvm.options" \
+	_sed-in-place "$CASSANDRA_CONF/jvm8-server.options" \
 		-r '/#?-XX:.*(\+UseParNewGC|SurvivorRatio=|MaxTenuringThreshold=|\+UseConcMarkSweepGC|CMS).*/ s/^/#/'
-	_sed-in-place "$CASSANDRA_CONF/jvm.options" \
+	_sed-in-place "$CASSANDRA_CONF/jvm8-server.options" \
 		-r '/#?-XX:.*(\+UseG1GC|G1RSetUpdatingPauseTimePercent=|MaxGCPauseMillis=).*/ s/^#//'
 
 	for yaml in \
